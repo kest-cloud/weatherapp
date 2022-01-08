@@ -85,7 +85,43 @@ class _MyHomePageState extends State<MyHomePage> {
             CityWeather(
               cityName: _weatherModel != null ? _weatherModel!.cityName : '',
             ),
-            if (_weatherModel != null) CurrentWeather(),
+            if (_weatherModel != null)
+              Column(
+                children: [
+                  Text(_weatherModel!.cityName, style: TextStyle(fontSize: 30)),
+                  SizedBox(height: 10),
+                  Text(_weatherModel!.weatherCountry.countryName,
+                      style: TextStyle(fontSize: 15)),
+                  SizedBox(height: 20),
+                  Image.network(
+                    _weatherModel!.iconUrl,
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                  Text(
+                    '${_weatherModel!.tempInfo.temperature.toString()}°F',
+                    style: TextStyle(fontSize: 40),
+                  ),
+                  Text(_weatherModel!.weatherInfo.description),
+                  SizedBox(height: 15.0),
+                  Text(_weatherModel!.date.toString(),
+                      style: TextStyle(fontSize: 20)),
+                  //Text(cdate, style: TextStyle(fontSize: 20)),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                      onPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WeatherDetailsForCity(
+                                  cityName: _weatherModel!.cityName)),
+                        );
+                      },
+                      child: Text("More Weather Details for City")),
+                  SizedBox(height: 15.0),
+                ],
+              ),
           ],
         ),
       ),

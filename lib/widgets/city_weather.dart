@@ -23,28 +23,66 @@ class _CityWeatherState extends State<CityWeather> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      SizedBox(height: 20),
-      Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _cityTextController,
-              textAlign: TextAlign.center,
-              decoration: InputDecoration(
-                hintText: "Enter City Name",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _cityTextController,
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: "Enter City Name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 ),
-              ),
+                ElevatedButton(onPressed: _search, child: Text("search")),
+              ],
             ),
-            ElevatedButton(onPressed: _search, child: Text("search")),
-          ],
-        ),
+          ),
+          if (_weatherModel != null)
+            Column(
+              children: [
+                Text(_weatherModel!.cityName, style: TextStyle(fontSize: 30)),
+                SizedBox(height: 20),
+                Text(_weatherModel!.weatherCountry.countryName,
+                    style: TextStyle(fontSize: 15)),
+                SizedBox(height: 20),
+                Image.network(
+                  _weatherModel!.iconUrl,
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.cover,
+                ),
+                Text(
+                  '${_weatherModel!.tempInfo.temperature}°',
+                  style: TextStyle(fontSize: 40),
+                ),
+                Text(_weatherModel!.weatherInfo.description),
+                SizedBox(height: 10.0),
+                Text(_weatherModel!.date.toString(),
+                    style: TextStyle(fontSize: 20)),
+                SizedBox(height: 15.0),
+                ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WeatherDetailsForCity(
+                                cityName: _weatherModel!.cityName)),
+                      );
+                    },
+                    child: Text("More Weather Details for City")),
+              ],
+            ),
+        ],
       ),
-      if (_weatherModel != null) CurrentWeather(),
-    ]));
+    );
   }
 
   void _search() async {
@@ -54,53 +92,5 @@ class _CityWeatherState extends State<CityWeather> {
     setState(() {
       _weatherModel = _response;
     });
-  }
-}
-
-class CurrentWeather extends StatefulWidget {
-  CurrentWeather({Key? key}) : super(key: key);
-
-  @override
-  _CurrentWeatherState createState() => _CurrentWeatherState();
-}
-
-class _CurrentWeatherState extends State<CurrentWeather> {
-  WeatherResponse? _weatherModel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(_weatherModel!.cityName, style: TextStyle(fontSize: 30)),
-        SizedBox(height: 20),
-        Text(_weatherModel!.weatherCountry.countryName,
-            style: TextStyle(fontSize: 15)),
-        SizedBox(height: 20),
-        Image.network(
-          _weatherModel!.iconUrl,
-          height: 100,
-          width: 100,
-          fit: BoxFit.cover,
-        ),
-        Text(
-          '${_weatherModel!.tempInfo.temperature}°',
-          style: TextStyle(fontSize: 40),
-        ),
-        Text(_weatherModel!.weatherInfo.description),
-        SizedBox(height: 10.0),
-        Text(_weatherModel!.date.toString(), style: TextStyle(fontSize: 20)),
-        SizedBox(height: 15.0),
-        ElevatedButton(
-            onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => WeatherDetailsForCity(
-                        cityName: _weatherModel!.cityName)),
-              );
-            },
-            child: Text("More Weather Details for City")),
-      ],
-    );
   }
 }

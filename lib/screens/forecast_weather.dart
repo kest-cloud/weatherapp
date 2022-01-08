@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weatherapp/model/forecast_model.dart';
-import 'package:weatherapp/model/weather_model.dart';
 import 'package:weatherapp/services/weather_api.dart';
 
 class WeatherDetailsForCity extends StatefulWidget {
@@ -21,21 +20,11 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
 
   ForecastData _forecastData = ForecastData(daily: []);
 
-  // late WeatherResponse _weatherModel = WeatherResponse(
-  //   cityName: _weatherModel.cityName,
-  //   tempInfo: _weatherModel.tempInfo,
-  //   weatherInfo: _weatherModel.weatherInfo,
-  //   weatherCountry: _weatherModel.weatherCountry,
-  //   date: _weatherModel.date,
-  // );
-
+  //method to get the weather data for the city
   void cityyweather(String city) async {
     final _response = await weatherApiClient.getCurrentWeather(widget.cityName);
-
     final _res = await weatherApiClient.getforecastWeather(widget.cityName);
-
     setState(() {
-      // _weatherModel = _response;
       _forecastData = _res;
     });
   }
@@ -45,7 +34,7 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.teal,
-        title: Text(widget.cityName),
+        title: Text(widget.cityName + " City"),
       ),
 
       //if forecatedata is null then show loading else show data
@@ -62,7 +51,7 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
                       cityyweather(widget.cityName);
                     },
                     child: Text(
-                        "Get " + widget.cityName + " iWeather for five days")),
+                        "Get " + widget.cityName + " Weather for five days")),
 
                 //if forecatedata is null then show loading else show data
                 _forecastData.daily.length != null
@@ -70,8 +59,8 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
                         width: MediaQuery.of(context).size.width * 4,
                         height: MediaQuery.of(context).size.height / 4,
                         child: ListView.builder(
-                            itemCount: _forecastData.daily.length >= 20
-                                ? 20
+                            itemCount: _forecastData.daily.length >= 25
+                                ? 25
                                 : _forecastData.daily.length,
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
@@ -112,6 +101,16 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
                                                 color: Colors.black,
                                                 fontSize: 15.0,
                                                 fontStyle: FontStyle.italic)),
+                                        Text(
+                                            DateFormat('yyyy-MM-dd – kk:mm')
+                                                .format(_forecastData
+                                                    .daily[index].date),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15.0,
+                                                fontStyle: FontStyle.italic)),
+
+                                        // DateFormat("MMMM d").format(date)
                                       ],
                                     ),
                                   ),
