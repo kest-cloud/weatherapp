@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weatherapp/model/forecast_model.dart';
 import 'package:weatherapp/services/weather_api.dart';
 
@@ -18,14 +19,22 @@ class WeatherDetailsForCity extends StatefulWidget {
 class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
   final weatherApiClient = WeatherService();
 
+  List<String> getData = [];
   ForecastData _forecastData = ForecastData(daily: []);
 
   //method to get the weather data for the city
   void cityyweather(String city) async {
     final _res = await weatherApiClient.getforecastWeather(widget.cityName);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _forecastData = _res;
+      getData = prefs.getStringList(getData[0])!;
     });
+  }
+
+  @override
+  void initState() {
+    cityyweather(widget.cityName);
   }
 
   @override
@@ -54,7 +63,10 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
 
                 //if forecatedata is null then show loading else show data
                 _forecastData.daily.length != null
-                    ? Container(
+                    ?
+                    //if the list is empty then show no data
+
+                    Container(
                         width: MediaQuery.of(context).size.width * 4,
                         height: MediaQuery.of(context).size.height / 4,
                         child: ListView.builder(

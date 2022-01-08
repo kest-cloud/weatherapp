@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weatherapp/model/forecast_model.dart';
 import 'package:weatherapp/model/weather_model.dart';
 import 'package:weatherapp/screens/forecast_weather.dart';
@@ -91,7 +92,7 @@ class _CityWeatherState extends State<CityWeather> {
   void _search() async {
     final _response =
         await _weatherApiClient.getCurrentWeather(_cityTextController.text);
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _weatherModel = _response;
     });

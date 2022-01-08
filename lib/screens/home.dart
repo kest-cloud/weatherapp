@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weatherapp/model/weather_model.dart';
 import 'package:weatherapp/screens/forecast_weather.dart';
 import 'package:weatherapp/services/weather_api.dart';
+
 import 'package:weatherapp/widgets/city_weather.dart';
 import 'package:weatherapp/widgets/concert_list.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -62,8 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         const EdgeInsets.symmetric(vertical: 1, horizontal: 4),
                     child: Card(
                       child: ListTile(
-                        onTap: () {
+                        onTap: () async {
                           cityweather(ConcertCity[index]);
+                          // SharedPreferences prefs =
+                          //     await SharedPreferences.getInstance();
                         },
                         title: Text(ConcertCity[index].toString()),
                         leading: CircleAvatar(),
