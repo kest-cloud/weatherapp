@@ -45,6 +45,8 @@ class _CityWeatherState extends State<CityWeather> {
               ],
             ),
           ),
+
+          //if weatherModel is not null then show weather data
           if (_weatherModel != null)
             Column(
               children: [
@@ -60,7 +62,7 @@ class _CityWeatherState extends State<CityWeather> {
                   fit: BoxFit.cover,
                 ),
                 Text(
-                  '${_weatherModel!.tempInfo.temperature}°',
+                  '${_weatherModel!.tempInfo.temperature} °F',
                   style: TextStyle(fontSize: 40),
                 ),
                 Text(_weatherModel!.weatherInfo.description),
@@ -85,6 +87,7 @@ class _CityWeatherState extends State<CityWeather> {
     );
   }
 
+//mwthod to get current weather
   void _search() async {
     final _response =
         await _weatherApiClient.getCurrentWeather(_cityTextController.text);

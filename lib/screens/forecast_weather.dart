@@ -59,8 +59,8 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
                         width: MediaQuery.of(context).size.width * 4,
                         height: MediaQuery.of(context).size.height / 4,
                         child: ListView.builder(
-                            itemCount: _forecastData.daily.length >= 25
-                                ? 25
+                            itemCount: _forecastData.daily.length >= 40
+                                ? 40
                                 : _forecastData.daily.length,
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
@@ -102,8 +102,8 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
                                                 fontSize: 15.0,
                                                 fontStyle: FontStyle.italic)),
                                         Text(
-                                            DateFormat('yyyy-MM-dd – kk:mm')
-                                                .format(_forecastData
+                                            DateFormat('kk:mm').format(
+                                                _forecastData
                                                     .daily[index].date),
                                             style: TextStyle(
                                                 color: Colors.black,
