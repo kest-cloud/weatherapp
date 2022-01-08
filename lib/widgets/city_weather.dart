@@ -76,16 +76,6 @@ class _CityWeatherState extends State<CityWeather> {
                             builder: (context) => WeatherDetailsForCity(
                                 cityName: _weatherModel!.cityName)),
                       );
-                      final _res = await _weatherApiClient
-                          .getforecastWeather(_weatherModel!.cityName);
-                      setState(() {
-                        _forecastData = _res;
-                        _weatherModel = _weatherModel;
-                      });
-
-                      print(_weatherModel!.cityName);
-                      print(_weatherModel!.cityName);
-                      print(_weatherModel!.cityName);
                     },
                     child: Text("More Weather Details for City")),
               ],

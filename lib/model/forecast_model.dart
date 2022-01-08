@@ -1,13 +1,14 @@
 class Daily {
-  final int date;
-  final double temp;
+  final DateTime date;
+  final num temp;
   final String description;
 
   Daily({required this.date, required this.temp, required this.description});
 
   factory Daily.fromJson(Map<String, dynamic> json) {
     return Daily(
-      date: json['dt'],
+      date:
+          DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000, isUtc: false),
       temp: json['main']['temp'],
       description: json['weather'][0]['description'],
     );

@@ -28,6 +28,8 @@ class WeatherService {
   }
 
   Future<ForecastData> getforecastWeather(String city) async {
+//api.openweathermap.org/data/2.5/forecast/daily?q={city name}&cnt={cnt}&appid={API key}
+
 //api.openweathermap.org/data/2.5/forecast?q=london&appid=98e8dfcf4ea2319b693eb4c58b2a6018
     final queryParameters = {
       'q': city,

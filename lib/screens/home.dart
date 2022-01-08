@@ -116,11 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               builder: (context) => WeatherDetailsForCity(
                                   cityName: _weatherModel!.cityName)),
                         );
-
-                        print(_weatherModel!.cityName);
-                        print(_weatherModel!.cityName);
-                        print(_weatherModel!.cityName);
-                        print(_weatherModel!.cityName);
                       },
                       child: Text("More Weather Details for City")),
                   SizedBox(height: 15.0),

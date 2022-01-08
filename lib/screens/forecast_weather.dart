@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weatherapp/model/forecast_model.dart';
 import 'package:weatherapp/model/weather_model.dart';
 import 'package:weatherapp/services/weather_api.dart';
@@ -43,6 +44,7 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.teal,
         title: Text(widget.cityName),
       ),
       body: _forecastData == null
@@ -57,14 +59,15 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
                     onPressed: () {
                       cityyweather(widget.cityName);
                     },
-                    child: Text("Get Weather for five days")),
+                    child: Text(
+                        "Get " + widget.cityName + " iWeather for five days")),
                 _forecastData.daily.length != null
                     ? Container(
                         width: MediaQuery.of(context).size.width * 4,
-                        height: MediaQuery.of(context).size.height / 5,
+                        height: MediaQuery.of(context).size.height / 4,
                         child: ListView.builder(
-                            itemCount: _forecastData.daily.length >= 5
-                                ? 5
+                            itemCount: _forecastData.daily.length >= 20
+                                ? 20
                                 : _forecastData.daily.length,
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
@@ -77,31 +80,34 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
                                           MainAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                            _forecastData.daily[index].temp
-                                                .toString(),
-                                            style:
-                                                TextStyle(color: Colors.black)),
-                                        // Text(_weatherModel!.weatherCountry.countryName,
-                                        //     style: TextStyle(
-                                        //         color: Colors.black, fontSize: 24.0)),
-                                        // Text(_weatherModel!.tempInfo.temperature.toString(),
-                                        //     style: TextStyle(color: Colors.black)),
-                                        // Image.network(
-                                        //   _weatherModel!.iconUrl,
-                                        //   height: 100,
-                                        //   width: 100,
-                                        // ),
+                                            "${_forecastData.daily[index].temp.toString()} °F",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 20)),
+                                        SizedBox(height: 10),
                                         Text(
                                             _forecastData
                                                 .daily[index].description,
                                             style: TextStyle(
                                                 color: Colors.black,
-                                                fontSize: 20.0)),
+                                                fontSize: 15.0)),
+                                        SizedBox(height: 10),
                                         Text(
-                                            _forecastData.daily[index].date
-                                                .toString(),
-                                            style:
-                                                TextStyle(color: Colors.black)),
+                                            DateFormat('EEEE').format(
+                                                _forecastData
+                                                    .daily[index].date),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15.0,
+                                                fontStyle: FontStyle.italic)),
+                                        Text(
+                                            DateFormat('MMMM d, yyyy').format(
+                                                _forecastData
+                                                    .daily[index].date),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15.0,
+                                                fontStyle: FontStyle.italic)),
                                       ],
                                     ),
                                   ),
@@ -117,78 +123,3 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
     );
   }
 }
-
-// //"${getDateFromTimestamp(_forcast.daily[index].dt)}"
-
-// class WeatherItem extends StatefulWidget {
-//   WeatherItem({Key? key, weather}) : super(key: key);
-
-//   @override
-//   _WeatherItemState createState() => _WeatherItemState();
-// }
-
-// class _WeatherItemState extends State<WeatherItem> {
-//   final ForecastData _forecastData = ForecastData(daily: []);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: SingleChildScrollView(
-//           child: Container(
-//             height: 200.0,
-//             child: ListView.builder(
-//                 itemCount: _forecastData.daily.length >= 5
-//                     ? 5
-//                     : _forecastData.daily.length,
-//                 scrollDirection: Axis.horizontal,
-//                 shrinkWrap: true,
-//                 itemBuilder: 
-//     );
-//   }
-// }
-
-
-
-
-// Expanded(
-                  //   child: Column(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: <Widget>[
-                  //       Padding(
-                  //         padding: const EdgeInsets.all(8.0),
-                  //         child: Column(
-                  //           children: <Widget>[
-                  //             ElevatedButton(
-                  //                 onPressed: () {
-                  //                   cityyweather(widget.cityName);
-                  //                 },
-                  //                 child: Text("Get Weather for five days")),
-                  //             Text(_weatherModel.cityName,
-                  //                 style: TextStyle(color: Colors.black12)),
-                  //             SizedBox(height: 10),
-                  //             Text(_weatherModel.weatherCountry.countryName,
-                  //                 style: TextStyle(fontSize: 15)),
-                  //             Text(_weatherModel.tempInfo.temperature.toString(),
-                  //                 style: const TextStyle(color: Colors.black12)),
-                  //             Image.network(_weatherModel.iconUrl),
-                  //             Text(_weatherModel.weatherInfo.description,
-                  //                 style: TextStyle(color: Colors.white)),
-                  //             Text(_weatherModel.date.toString(),
-                  //                 style: TextStyle(fontSize: 20)),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       Padding(
-                  //         padding: const EdgeInsets.all(8.0),
-                  //         child: IconButton(
-                  //           icon: Icon(Icons.refresh),
-                  //           tooltip: 'Refresh',
-                  //           onPressed: () => null,
-                  //           color: Colors.blue,
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
