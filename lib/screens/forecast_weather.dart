@@ -22,7 +22,6 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
 
   //method to get the weather data for the city
   void cityyweather(String city) async {
-    final _response = await weatherApiClient.getCurrentWeather(widget.cityName);
     final _res = await weatherApiClient.getforecastWeather(widget.cityName);
     setState(() {
       _forecastData = _res;

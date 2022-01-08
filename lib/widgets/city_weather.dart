@@ -35,7 +35,7 @@ class _CityWeatherState extends State<CityWeather> {
                   controller: _cityTextController,
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    hintText: "Enter City Name",
+                    hintText: "find by city name",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

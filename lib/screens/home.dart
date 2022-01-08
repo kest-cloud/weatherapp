@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:weatherapp/model/forecast_model.dart';
 import 'package:weatherapp/model/weather_model.dart';
 import 'package:weatherapp/screens/forecast_weather.dart';
 import 'package:weatherapp/services/weather_api.dart';
@@ -11,7 +9,6 @@ import 'package:weatherapp/widgets/concert_list.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
-
   final String title;
 
   @override
@@ -21,7 +18,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _weatherApiClient = WeatherService();
   WeatherResponse? _weatherModel;
-  ForecastData? _forecastData;
 
 //method to get current weather data
   void cityweather(String city) async {
@@ -30,8 +26,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _weatherModel = _response;
     });
   }
-
-  String cdate = DateFormat("yyyy-MM-dd").format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ListTile(
                         onTap: () {
                           cityweather(ConcertCity[index]);
-                          print(ConcertCity[index]);
                         },
                         title: Text(ConcertCity[index].toString()),
-                        leading: CircleAvatar(
-                            // backgroundImage:
-                            //     AssetImage('assets/${data[index].avatar}'),
-                            ),
+                        leading: CircleAvatar(),
                       ),
                     ),
                   );
@@ -107,7 +97,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(height: 15.0),
                   Text(_weatherModel!.date.toString(),
                       style: TextStyle(fontSize: 20)),
-                  //Text(cdate, style: TextStyle(fontSize: 20)),
                   SizedBox(height: 10),
                   ElevatedButton(
                       onPressed: () async {
