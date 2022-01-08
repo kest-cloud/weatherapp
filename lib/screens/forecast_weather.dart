@@ -47,6 +47,8 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
         backgroundColor: Colors.teal,
         title: Text(widget.cityName),
       ),
+
+      //if forecatedata is null then show loading else show data
       body: _forecastData == null
           ? Container(
               child: Center(
@@ -61,6 +63,8 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
                     },
                     child: Text(
                         "Get " + widget.cityName + " iWeather for five days")),
+
+                //if forecatedata is null then show loading else show data
                 _forecastData.daily.length != null
                     ? Container(
                         width: MediaQuery.of(context).size.width * 4,
