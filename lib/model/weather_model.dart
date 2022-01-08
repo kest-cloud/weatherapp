@@ -1,15 +1,3 @@
-//
-// class CountryInfo {
-//   final String countryName;
-
-//   CountryInfo({required this.countryName});
-
-//   factory CountryInfo.fromJson(Map<String, dynamic> json) {
-//     final countryName = json['country'];
-//     return CountryInfo(countryName: countryName);
-//   }
-// }
-
 // ignore_for_file: unnecessary_new
 
 class WeatherCountry {
