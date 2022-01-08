@@ -1,50 +1,34 @@
-class ForecastData {
-  final List list;
+class Daily {
+  final int date;
+  final double temp;
+  final String description;
 
-  ForecastData({required this.list});
+  Daily({required this.date, required this.temp, required this.description});
 
-  factory ForecastData.fromJson(Map<String, dynamic> json) {
-    List list = json['list'];
-
-    for (dynamic e in json['list']) {
-      WeatherData w = WeatherData(
-          date:
-              DateTime.fromMillisecondsSinceEpoch(e['dt'] * 1000, isUtc: false),
-          name: json['city']['name'],
-          temp: e['main']['temp'].toDouble(),
-          main: e['weather'][0]['main'],
-          icon: e['weather'][0]['icon']);
-      list.add(w);
-    }
-
-    return ForecastData(
-      list: list,
+  factory Daily.fromJson(Map<String, dynamic> json) {
+    return Daily(
+      date: json['dt'],
+      temp: json['main']['temp'],
+      description: json['weather'][0]['description'],
     );
   }
 }
 
-class WeatherData {
-  final DateTime date;
-  final String name;
-  final double temp;
-  final String main;
-  final String icon;
+class ForecastData {
+  final List<Daily> daily;
 
-  WeatherData(
-      {required this.date,
-      required this.name,
-      required this.temp,
-      required this.main,
-      required this.icon});
+  ForecastData({required this.daily});
 
-  factory WeatherData.fromJson(Map<String, dynamic> json) {
-    return WeatherData(
-      date:
-          DateTime.fromMillisecondsSinceEpoch(json['dt'] * 1000, isUtc: false),
-      name: json['name'],
-      temp: json['main']['temp'].toDouble(),
-      main: json['weather'][0]['main'],
-      icon: json['weather'][0]['icon'],
-    );
+  factory ForecastData.fromJson(Map<String, dynamic> json) {
+    List dailyData = json['list'];
+
+    List<Daily> daily = <Daily>[];
+
+    for (var item in dailyData) {
+      var day = Daily.fromJson(item);
+      daily.add(day);
+    }
+
+    return ForecastData(daily: daily);
   }
 }

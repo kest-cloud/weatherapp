@@ -21,7 +21,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _weatherApiClient = WeatherService();
   WeatherResponse? _weatherModel;
-  WeatherData? _weatherData;
   ForecastData? _forecastData;
 
   void cityweather(String city) async {
@@ -117,12 +116,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               builder: (context) => WeatherDetailsForCity(
                                   cityName: _weatherModel!.cityName)),
                         );
-                        final _res = await _weatherApiClient
-                            .getforecastWeather(_weatherModel!.cityName);
-                        setState(() {
-                          _forecastData = _res;
-                        });
-                        print(_res.toString());
+
+                        print(_weatherModel!.cityName);
+                        print(_weatherModel!.cityName);
+                        print(_weatherModel!.cityName);
                         print(_weatherModel!.cityName);
                       },
                       child: Text("More Weather Details for City")),

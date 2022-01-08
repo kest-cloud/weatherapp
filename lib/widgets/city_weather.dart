@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:weatherapp/model/forecast_model.dart';
 import 'package:weatherapp/model/weather_model.dart';
 import 'package:weatherapp/screens/forecast_weather.dart';
 import 'package:weatherapp/services/weather_api.dart';
@@ -17,6 +18,7 @@ class _CityWeatherState extends State<CityWeather> {
   final _cityTextController = TextEditingController();
   final _weatherApiClient = WeatherService();
   WeatherResponse? _weatherModel;
+  ForecastData? _forecastData;
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +69,23 @@ class _CityWeatherState extends State<CityWeather> {
                     style: TextStyle(fontSize: 20)),
                 SizedBox(height: 15.0),
                 ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => WeatherDetailsForCity(
                                 cityName: _weatherModel!.cityName)),
                       );
+                      final _res = await _weatherApiClient
+                          .getforecastWeather(_weatherModel!.cityName);
+                      setState(() {
+                        _forecastData = _res;
+                        _weatherModel = _weatherModel;
+                      });
+
+                      print(_weatherModel!.cityName);
+                      print(_weatherModel!.cityName);
+                      print(_weatherModel!.cityName);
                     },
                     child: Text("More Weather Details for City")),
               ],

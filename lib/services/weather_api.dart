@@ -18,10 +18,13 @@ class WeatherService {
         'api.openweathermap.org', '/data/2.5/weather', queryParameters);
 
     final response = await http.get(uri);
-
     print(response.body);
-    final json = jsonDecode(response.body);
-    return WeatherResponse.fromJson(json);
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return WeatherResponse.fromJson(json);
+    } else {
+      throw Exception('Failed to load weather');
+    }
   }
 
   Future<ForecastData> getforecastWeather(String city) async {
@@ -37,15 +40,11 @@ class WeatherService {
 
     final response = await http.get(uri);
 
-    print(response.body);
-    final json = jsonDecode(response.body);
-    return ForecastData.fromJson(json);
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return ForecastData.fromJson(json);
+    } else {
+      throw Exception('Failed to load forecast');
+    }
   }
 }
-
-
-// Silverstone, UK
-// São Paulo, Brazil
-// Melbourne, Australia
-// Monte Carlo, Monaco
-
