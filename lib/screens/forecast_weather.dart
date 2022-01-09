@@ -1,4 +1,8 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print
+
+import 'dart:convert';
+import 'dart:convert';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -6,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weatherapp/model/forecast_model.dart';
 import 'package:weatherapp/services/weather_api.dart';
 import 'package:weatherapp/utils/weather_bank.dart';
+import 'package:connectivity/connectivity.dart';
 
 class WeatherDetailsForCity extends StatefulWidget {
   final String cityName;
@@ -21,37 +26,49 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
   final weatherApiClient = WeatherService();
 
   ForecastData _forecastData = ForecastData(daily: []);
-  List? dataValue;
+  // List<String>? dataValue;
 
   //method to get the weather data for the city
   void cityyweather(String city) async {
     final _res = await weatherApiClient.getforecastWeather(widget.cityName);
-    //await UserSimplePreferences.setForecastData(_res.daily);
+    print(_res.runtimeType);
     setState(() {
       _forecastData = _res;
     });
+    setWeatherData(json.encode(_forecastData.toJsonList()));
   }
 
   @override
   void initState() {
     super.initState();
-
-    cityyweather(widget.cityName);
-    setWeatherData(widget.cityName);
-    getWeather();
-    //_forecastData = UserSimplePreferences.getForecastData() as ForecastData;
+    initweather();
   }
 
-  Future<void> setWeatherData(dataValue) async {
+  Future<void> setWeatherData(dataa) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('data', dataValue);
+    prefs.setString('data', dataa);
   }
 
   void getWeather() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    dataValue = prefs.getStringList('data');
-    print(dataValue);
-    setState(() {});
+    // dataValue = prefs.getStringList('data');]
+
+    setState(() {
+      _forecastData = ForecastData.fromJson(
+          {'list': List.from(json.decode(prefs.getString('data')!))});
+      print(_forecastData);
+    });
+    print(_forecastData);
+  }
+
+  void initweather() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      print('local weather data is fetching');
+      getWeather();
+    } else {
+      cityyweather(widget.cityName);
+    }
   }
 
   @override
@@ -73,8 +90,7 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
               child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 ElevatedButton(
                     onPressed: () {
-                      cityyweather(widget.cityName);
-                      setWeatherData(widget.cityName);
+                      initweather();
                     },
                     child: Text("This is Weather info for " +
                         widget.cityName +
