@@ -38,9 +38,13 @@ Another button to confirm user request to get 3 hours/5days weather information 
 (https://raw.github.com/kest-cloud/weatherapp/master/screenshots/ss2.jpeg)
 
 
-![alt text]((https://github.com/kest-cloud/weatherapp/screenshots/ss1.jpeg))
 
-![alt text]((https://github.com/kest-cloud/weatherapp/screenshots/ss2.jpeg))
+![First Screen]((https://github.com/kest-cloud/weatherapp/blob/master/screenshots/ss1.jpeg))
+
+
+![Second Screen]((https://github.com/kest-cloud/weatherapp/blob/master/screenshots/ss1.jpeg))
+
+
 
 
 
