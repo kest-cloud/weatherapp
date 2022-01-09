@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weatherapp/model/forecast_model.dart';
 import 'package:weatherapp/services/weather_api.dart';
+import 'package:weatherapp/utils/weather_bank.dart';
 
 class WeatherDetailsForCity extends StatefulWidget {
   final String cityName;
@@ -19,22 +20,38 @@ class WeatherDetailsForCity extends StatefulWidget {
 class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
   final weatherApiClient = WeatherService();
 
-  List<String> getData = [];
   ForecastData _forecastData = ForecastData(daily: []);
+  List? dataValue;
 
   //method to get the weather data for the city
   void cityyweather(String city) async {
     final _res = await weatherApiClient.getforecastWeather(widget.cityName);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //await UserSimplePreferences.setForecastData(_res.daily);
     setState(() {
       _forecastData = _res;
-      getData = prefs.getStringList(getData[0])!;
     });
   }
 
   @override
   void initState() {
+    super.initState();
+
     cityyweather(widget.cityName);
+    setWeatherData(widget.cityName);
+    getWeather();
+    //_forecastData = UserSimplePreferences.getForecastData() as ForecastData;
+  }
+
+  Future<void> setWeatherData(dataValue) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('data', dataValue);
+  }
+
+  void getWeather() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    dataValue = prefs.getStringList('data');
+    print(dataValue);
+    setState(() {});
   }
 
   @override
@@ -57,16 +74,16 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
                 ElevatedButton(
                     onPressed: () {
                       cityyweather(widget.cityName);
+                      setWeatherData(widget.cityName);
                     },
-                    child: Text(
-                        "Get " + widget.cityName + " Weather for five days")),
+                    child: Text("This is Weather info for " +
+                        widget.cityName +
+                        " City every three hours")),
 
                 //if forecatedata is null then show loading else show data
-                _forecastData.daily.length != null
-                    ?
-                    //if the list is empty then show no data
 
-                    Container(
+                _forecastData.daily.length != null
+                    ? Container(
                         width: MediaQuery.of(context).size.width * 4,
                         height: MediaQuery.of(context).size.height / 4,
                         child: ListView.builder(

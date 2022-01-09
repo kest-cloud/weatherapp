@@ -2,8 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:weatherapp/screens/home.dart';
+import 'package:weatherapp/utils/weather_bank.dart';
 
-void main() {
+Future main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+
+  // await UserSimplePreferences.init();
+
   runApp(const MyApp());
 }
 

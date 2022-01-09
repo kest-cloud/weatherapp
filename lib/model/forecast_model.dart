@@ -16,7 +16,7 @@ class Daily {
 }
 
 class ForecastData {
-  final List<Daily> daily;
+  late final List<Daily> daily;
 
   ForecastData({required this.daily});
 
