@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:convert';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weatherapp/model/weather_model.dart';
@@ -21,13 +24,45 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _weatherApiClient = WeatherService();
   WeatherResponse? _weatherModel;
+  String concertcity = '';
 
 //method to get current weather data
   void cityweather(String city) async {
     final _response = await _weatherApiClient.getCurrentWeather(city);
+    print(_response.runtimeType);
     setState(() {
       _weatherModel = _response;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initweather();
+  }
+
+  Future<void> setWeatherData(dataa) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('data', dataa);
+  }
+
+  void getWeather() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // dataValue = prefs.getStringList('data');]
+
+    setState(() {
+      _weatherModel = WeatherResponse.fromJson(
+          {'list': List.from(json.decode(prefs.getString('data')!))});
+    });
+  }
+
+  void initweather() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      getWeather();
+    } else {
+      cityweather(concertcity);
+    }
   }
 
   @override
@@ -67,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ListTile(
                         onTap: () async {
                           cityweather(ConcertCity[index]);
+                          concertcity = ConcertCity[index];
                           // SharedPreferences prefs =
                           //     await SharedPreferences.getInstance();
                         },
@@ -83,6 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
             if (_weatherModel != null)
               Column(
                 children: [
+                  Divider(thickness: 2),
+                  Text('Current Weather for Proposed City Concert'),
                   Text(_weatherModel!.cityName, style: TextStyle(fontSize: 30)),
                   SizedBox(height: 10),
                   Text(_weatherModel!.weatherCountry.countryName,

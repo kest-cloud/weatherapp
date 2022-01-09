@@ -26,12 +26,10 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
   final weatherApiClient = WeatherService();
 
   ForecastData _forecastData = ForecastData(daily: []);
-  // List<String>? dataValue;
 
   //method to get the weather data for the city
   void cityyweather(String city) async {
     final _res = await weatherApiClient.getforecastWeather(widget.cityName);
-    print(_res.runtimeType);
     setState(() {
       _forecastData = _res;
     });
@@ -56,15 +54,12 @@ class _WeatherDetailsForCityState extends State<WeatherDetailsForCity> {
     setState(() {
       _forecastData = ForecastData.fromJson(
           {'list': List.from(json.decode(prefs.getString('data')!))});
-      print(_forecastData);
     });
-    print(_forecastData);
   }
 
   void initweather() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
-      print('local weather data is fetching');
       getWeather();
     } else {
       cityyweather(widget.cityName);
