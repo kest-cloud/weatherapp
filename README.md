@@ -39,21 +39,10 @@ Another button to confirm user request to get 3 hours/5days weather information 
 
 
 
-![First Screen]((https://github.com/kest-cloud/weatherapp/blob/master/screenshots/ss1.jpeg))
+![ss1](https://user-images.githubusercontent.com/54664998/148670136-d2609441-9947-495a-8cd0-ccce04b335df.jpeg)
 
 
-![Second Screen]((https://github.com/kest-cloud/weatherapp/blob/master/screenshots/ss1.jpeg))
-
-
-
-
-
-
-You can also make use of visual aids by including materials like screenshots to show examples of the running project and also the structure and design principles used in your project.
-
-
-Also if your project will require authentication like passwords or usernames, this is a good section to include the credentials.
-
+![ss2](https://user-images.githubusercontent.com/54664998/148670152-9d21fd58-eabf-4f67-8206-99503e15bd02.jpeg)
 
 
 
