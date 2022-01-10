@@ -51,8 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // dataValue = prefs.getStringList('data');]
 
     setState(() {
-      _weatherModel = WeatherResponse.fromJson(
-          {'list': List.from(json.decode(prefs.getString('data')!))});
+      _weatherModel =
+          WeatherResponse.fromJson(json.decode(prefs.getString('data')!));
     });
   }
 
