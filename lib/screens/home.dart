@@ -29,7 +29,6 @@ class _MyHomePageState extends State<MyHomePage> {
 //method to get current weather data
   void cityweather(String city) async {
     final _response = await _weatherApiClient.getCurrentWeather(city);
-    print(_response.runtimeType);
     setState(() {
       _weatherModel = _response;
     });
